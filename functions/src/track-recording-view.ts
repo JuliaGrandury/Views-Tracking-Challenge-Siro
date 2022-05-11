@@ -1,27 +1,6 @@
 import * as functions from "firebase-functions";
 import {db} from "./index";
-
-/* BONUS OPPORTUNITY
-It's not great (it's bad) to throw all of this code in one file.
-Can you help us organize this code better?
-*/
-
-
-export interface Recording {
-    id: string; // matches document id in firestore
-    creatorId: string; // id of the user that created this recording
-    uniqueViewCount: number;
-}
-
-export interface User {
-    id: string; // mathes both the user's document id
-    uniqueRecordingViewCount: number; // sum of all recording views
-}
-
-export enum Collections {
-    Users = "Users",
-    Recordings = "Recordings"
-}
+import { Recording, User, Collections } from "./types";
 
 export async function trackRecordingView(viewerId: string, recordingId: string): Promise<void> {
   // TODO: implement this function
