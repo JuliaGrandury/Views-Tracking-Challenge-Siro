@@ -17,7 +17,7 @@ Implementing a cloud function that can update the `uniqueViewCount` field in the
 - If this unique view does not exist, update the recording's uniqueRecordingViewCount and creator of the recording's uniqueViewCount
 
 - Bonus from `track-recording-views.ts` : For the purpose of readability and maintenance, I factored out the interfaces and enum from `track-recording-views.ts` and placed them all in `types.ts`.
-- Bonus from `index.ts` : Validate that `viewerId` and `recordingId` are strings (not null or of another type) and are non-empty.
+- Bonus from `index.ts` : Validated that `viewerId` and `recordingId` are strings (not null or of another type) and are non-empty.
 
 ### Setting it up
 - You will need to have Node.js and npm installed. If you do not, visit [Download Node.js](https://nodejs.org/en/download/) and install the latest version of npm with `npm install npm@latest -g`. Ensure that both are correctly installed using `node -v` and `npm -v`.
