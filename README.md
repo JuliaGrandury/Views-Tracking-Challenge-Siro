@@ -1,35 +1,30 @@
 # Views-Tracking-Challenge
 
-### Prerequisites:
-- Node, if you don't have it, you can install it from https://nodejs.org/en/download/
+### Assignment
+Implementing a cloud function that can update the `uniqueViewCount` field in the recording document given passed in parameters of `viewerId` and `recordingId` with the following requirements: 
+- Needs to be able to handle significant amounts of views within a day (if recording goes viral)
+- Only counts unique views (one view per user on a recording)
+- Must update data in such a way that a same viewer opening a same recording on different devices would only increment the `uniqueViewCount` once
 
-### Getting Started:
-- install the firebase CLI with
-```
-npm install -g firebase-tools
-```
-- navigate to the functions directory and install dependencies with
-```
-cd functions && npm i
-```
+### Assumptions
+- ViewerIds and RecordingIds are unique
+- The `trackRecordingView` cloud function will be called by the client every time any user opens any recording in our mobile app
 
-### Writing Your Code:
-- The main place you'll want to write your code is in functions/src/track-recording-view.ts
-- Here you'll find a function stub you can use with some examples of how to interact with the firestore database
-- Implement the function trackRecordingView
+### Solution Design
+- Implemented a transaction to ensure that if two requests for the same recording were made by the same viewer simultaneously there would not be double counting
+- Queried the UniqueViews collection I added in `types.ts`
+- Checked if the particular unique view exists and proceed not to change anything if it does
+- If this unique view does not exist, update the recording's uniqueRecordingViewCount and creator of the recording's uniqueViewCount
 
-### Writing Test Cases For Your Code:
-- No need to write full unit tests for your code, but inside functions/test/test.txt, list the test cases you'd test if you were to write thorough unit testing, and the expected result in each case
+- Bonus from `track-recording-views.ts` : For the purpose of readability and maintenance, I factored out the interfaces and enum from `track-recording-views.ts` and placed them all in `types.ts`.
+- Bonus from `index.ts` : Validate that `viewerId` and `recordingId` are strings (not null or of another type) and are non-empty.
 
-### Running Your Code:
-Firebase has some excellent tooling for locally emulating cloud functions, firestore database, and more in concert. We've set up a database with some dummy data for you to play around with, and a website you can use to easily hit your locally running cloud function. You can assume the client will make calls to this function whenever a users opens a recording in the app. The website below is just an easy way for you to test your cloud function. Here's how to use it
-- initiate the emulator from the functions directory with
-```
-npm run serve
-```
-- once your emulator is running, you can can easily access the firestore database and your function logs through the firebase emulator ui at http://localhost:4000. You should see some dummy data in the database
-- use https://sirocodingchallenges.web.app to easily make requests to your function running locally
-- NOTE: we don't have hot reloading setup for this project yet, so you'll have to terminate the emulator and restart whenever you make code changes with 
-```
-npm run serve
-```
+### Setting it up
+- You will need to have Node.js and npm installed. If you do not, visit [Download Node.js](https://nodejs.org/en/download/) and install the latest version of npm with `npm install npm@latest -g`. Ensure that both are correctly installed using `node -v` and `npm -v`.
+- Clone the repository with `git clone https://github.com/JuliaGrandury/Views-Tracking-Challenge-Siro`
+- install the firebase CLI with `npm install -g firebase-tools`
+- navigate to the functions directory and install dependencies with `cd functions && npm i`
+- initiate and run the emulator at `npm run serve`
+
+### Further development outside of the scope of the project
+Could account for the fact that users might briefly open the recording but not view the majority of it and therefore should not be counted as viewers in the uniqueViewCount or uniqueRecordingViewCount.
