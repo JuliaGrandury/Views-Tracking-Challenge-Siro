@@ -1,10 +1,10 @@
 import * as functions from "firebase-functions";
-import {trackRecordingView} from "./track-recording-view";
+import { trackRecordingView } from "./track-recording-view";
 
 import * as admin from "firebase-admin";
 // eslint-disable-next-line max-len
 import * as serviceAccount from "../sirocodingchallenges-firebase-adminsdk-d5epk-d5345de48d.json";
-import {ServiceAccount} from "firebase-admin";
+import { ServiceAccount } from "firebase-admin";
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount as ServiceAccount),
@@ -14,9 +14,8 @@ admin.initializeApp({
 // use db to access the database
 export const db = admin.firestore();
 
-
 // If you need, here's the documentation for google cloud functions w typescript:
-// https://firebase.google.com/docs/functions/typescript
+// https://firebase.google.com/docs/functions/typescript (READ)
 
 // assumes the request has been authenticated, the caller has the required permissions
 export const recordingViews = functions.https.onRequest(async (request, response) => {
@@ -26,12 +25,11 @@ export const recordingViews = functions.https.onRequest(async (request, response
   response.set("Access-Control-Allow-Headers", "Content-Type");
   if (request.method === "POST") {
     try {
-      const {viewerId, recordingId} = request.body;
-
+      const { viewerId, recordingId } = request.body;
 
       /* BONUS OPPORTUNITY
       Looks like you're a curious person. We like that.
-      Curiosity is one of our values.
+      Curiosity is one of our values. (DONE)
 
       For bonus points:
         Show off your curiosity by adding some validation to this function.
@@ -40,6 +38,15 @@ export const recordingViews = functions.https.onRequest(async (request, response
         3. Send a 400 response and return if the request is invalid
             response.status(400).send();
         */
+
+      //Validate that the viewerId and recordingId are strings and are not empty
+      if (typeof viewerId !== 'string' || typeof recordingId !== 'string') {
+        response.status(400).send('Type Error: viewerId and recordingId should be strings');
+        return;
+      }
+      if (viewerId === "" || recordingId === "") {
+        response.status(400).send('viewerId and recordingId cannot be empty strings');
+      }
 
       await trackRecordingView(viewerId, recordingId);
       // it worked!

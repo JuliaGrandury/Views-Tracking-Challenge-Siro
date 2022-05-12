@@ -9,7 +9,13 @@ export interface User {
     uniqueRecordingViewCount: number; // sum of all recording views
 }
 
+export interface UniqueViews{
+    viewerId: string;
+    recordingId: string;
+}
+
 export enum Collections {
     Users = "Users",
-    Recordings = "Recordings"
+    Recordings = "Recordings",
+    UniqueViews = "UniqueViews"
 }
