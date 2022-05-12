@@ -41,7 +41,7 @@ export const recordingViews = functions.https.onRequest(async (request, response
 
       //Validate that the viewerId and recordingId are strings and are not empty
       if (typeof viewerId !== 'string' || typeof recordingId !== 'string') {
-        response.status(400).send('Type Error: viewerId and recordingId should be strings');
+        response.status(400).send('viewerId and recordingId should be strings');
         return;
       }
       if (viewerId === "" || recordingId === "") {

@@ -8,3 +8,19 @@ List each case below in plain english with it's expected result.
 For example...
 Case: user a views user b's recording x for the first time
 Expected Result: etc etc
+
+
+Case: user a views user b's recording x for the first time
+Expected Result: user b's uniqueRecordingViewCount and recording x's uniqueViewCount increase by 1
+
+Case: user a views user b's recording x for the second time
+Expected Result: user b's uniqueRecordingViewCount and recording x's uniqueViewCount remain the same
+
+Case: user a views user b's recording x on two or more devices at the same time for the first time
+Expected Result: user b's uniqueRecordingViewCount and recording x's uniqueViewCount still only increase by 1
+
+Case: a non existing user views user b's recording x (no viewerId)
+Expected Result: a 400 error is thrown because the viewerId doesn't exist
+
+Case: user a views a recording that doesn't exist (no RecodingId)
+Expected Result: the database remains the same as the recording doesn't exist
