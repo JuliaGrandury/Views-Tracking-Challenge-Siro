@@ -9,7 +9,7 @@ export interface User {
     uniqueRecordingViewCount: number; // sum of all recording views
 }
 
-export interface UniqueViews{
+export interface UniqueView {
     viewerId: string;
     recordingId: string;
 }

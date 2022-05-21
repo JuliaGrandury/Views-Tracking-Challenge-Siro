@@ -20,7 +20,6 @@ export const db = admin.firestore();
 // assumes the request has been authenticated, the caller has the required permissions
 export const recordingViews = functions.https.onRequest(async (request, response) => {
   response.set("Access-Control-Allow-Origin", "*");
-  response.set("Access-Control-Allow-Origin", "*");
   response.set("Access-Control-Allow-Methods", "POST");
   response.set("Access-Control-Allow-Headers", "Content-Type");
   if (request.method === "POST") {
